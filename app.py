@@ -60,7 +60,7 @@ def convert_to_pandas(user_query, df):# Text to pandas agent
     }}
     """
     
-    # Değişkenleri yerleştirmek için promptu formatla
+    # formatted prompt with column informations
     formatted_system_prompt = system_prompt.format(df_columns=columns)
     response=client.models.generate_content(model="gemini-2.0-flash",contents=user_query,
                                         config=types.GenerateContentConfig(
