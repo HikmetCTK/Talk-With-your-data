@@ -90,7 +90,7 @@ def convert_to_visual_code(user_query, df):#  Text to Visualizaton agent
     user_query:str(user query)
     df:dataframe
     description: This function is used for converting user query to visualization code or false based on query.
-    Returns:visual_code(str):Visualization code from LLM based on question
+    Returns:visual_code(str):Visualization code or False
     """
     
     summary=pd.DataFrame({"Data types":df.dtypes,
