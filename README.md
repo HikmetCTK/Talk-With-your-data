@@ -30,8 +30,9 @@ This projects aim is provide detailed information and visualization about your d
 
 # Sample Pictures 🖼️
 
-<img src="![Screenshot 2025-03-02 165431](https://github.com/user-attachments/assets/0842ae40-a382-4b9d-b0d8-58e9265e9061)" alt="drawing" width="350"/>
-<img src="![coolplot-03-02 165431](https://github.com/user-attachments/assets/555eccc6-ebd8-4952-adff-76a333109e87)" alt="drawing" width="350"/>
+<img src="https://github.com/user-attachments/assets/0842ae40-a382-4b9d-b0d8-58e9265e9061" alt="drawing" width="350"/>
+<img src="https://github.com/user-attachments/assets/555eccc6-ebd8-4952-adff-76a333109e87" alt="drawing" width="350"/>
+
 
 
 
