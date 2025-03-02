@@ -1,6 +1,6 @@
 # Analyzing your CSV or Excel data without writing single line code has never been easier!
 
-## 📌Data Analysis and Visualization Agents helps you understand your dataset without needing coding skills ##
+📌Data Analysis and Visualization Agents helps you understand your dataset without needing coding skills 
 
 # Project Demo Video🎥
 
