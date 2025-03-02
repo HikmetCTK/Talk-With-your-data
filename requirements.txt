@@ -1,0 +1,6 @@
+google-generativeai
+pandas
+gradio
+python-dotenv
+matplotlib.pyplot
+seaborn
