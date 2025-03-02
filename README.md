@@ -32,6 +32,7 @@ This projects aim is provide detailed information and visualization about your d
 
 <img src="https://github.com/user-attachments/assets/0842ae40-a382-4b9d-b0d8-58e9265e9061" alt="drawing" width="500" height=400/>
 <img src="https://github.com/user-attachments/assets/0ec128f4-1a99-43df-b08a-35d6a758c82e" alt="drawing" width="500" height=400/>
+![coolplot-03-02 165431](https://github.com/user-attachments/assets/cfb1010b-04f7-4c87-ac1b-8f5d05c485f4)
 
 
 
