@@ -33,10 +33,10 @@ def find_file_type(df_path):
 def convert_to_pandas(user_query, df):# Text to pandas agent
     """
     args:
-    user_query:str(user query)
+    user_query(str):user query
     df:dataframe
-    description: Bu fonksiyon kullanıcıdan alınan isteği pandas koduna çevirir eğer kullanıcı alakasız bir şey isterse confidence skorundan dönen değerle False değeri döndürür.
-    Returns:str(pandas code) or False
+    description: This Function is used for converting user question to pandas code if user asks unrelated or dangerous question   
+    Returns:True,pandas_query(str) or  False,pandas_query(warning message)
     """
     
     columns = df.columns.tolist()  # Get list of columns name of dataset
@@ -60,7 +60,7 @@ def convert_to_pandas(user_query, df):# Text to pandas agent
     }}
     """
     
-    # formatted prompt with column informations
+    # Değişkenleri yerleştirmek için promptu formatla
     formatted_system_prompt = system_prompt.format(df_columns=columns)
     response=client.models.generate_content(model="gemini-2.0-flash",contents=user_query,
                                         config=types.GenerateContentConfig(
@@ -89,8 +89,8 @@ def convert_to_visual_code(user_query, df):#  Text to Visualizaton agent
     args:
     user_query:str(user query)
     df:dataframe
-    description: This function is used for converting user query to pandas code or False based on query.
-    Returns:str(pandas code) or False
+    description: This function is used for converting user query to visualization code or false based on query.
+    Returns:visual_code(str):Visualization code from LLM based on question
     """
     
     summary=pd.DataFrame({"Data types":df.dtypes,
@@ -114,7 +114,7 @@ def convert_to_visual_code(user_query, df):#  Text to Visualizaton agent
     "confidence":0.85,
     "query":"bugün nasılsın"
     "visual_code": "sns.pairplot(df)",
-    "confidence":0.85,
+    "confidence":0.85
     }}
 
     """
@@ -133,11 +133,11 @@ def convert_to_visual_code(user_query, df):#  Text to Visualizaton agent
     try:
         json_response=json.loads(response.text)
         
-        pandas_query=json_response["visual_code"] # pandas code
+        visual_code=json_response["visual_code"] # pandas code
 
         confidence=json_response["confidence"]  # Confidence score
         if confidence>0.7:  
-            return pandas_query
+            return visual_code
         else:
             return False
     except Exception as e:
@@ -150,9 +150,10 @@ def safe_exec(code, local_vars):
     args: 
     Code(str):pandas code
     
-    Description: This function is used to prevent dangerous codes like (os,sys,subprocess)
+    Description: This function is used to prevent dangerous codes like (os,sys,subprocess) and return  result variable
     
-    returns:local_vars:izin verilen local değişken . Dataframe değişkenimiz (df)
+    returns:
+            local_vars["result"]:Result variable which includes output of pandas code
     """
     code="result="+code # Output is in result variable
     safe_builtins = { #permitted commands
@@ -174,11 +175,12 @@ def safe_exec(code, local_vars):
 def readable_answer_agent(user_query,response):
     """ 
     args:
-        response(str):Safe exec fonksiyonundan gelen yanıt
-        user_question(str):Kullanıcının girdiği soru
-    description:Kullanıcıdan gelen soruyu ve cevabını düzgün formatta okuyucuya sunar.
+        
+        user_query(str):User question
+        response(str):Output from safe_exec function
+    description:Returns question's answer by taken from user in good format .
     returns:
-        response.text:LLM'den çıkan yanıt
+        response.text(str):LLM response
     """
     system_prompt = """Sen, kullanıcının sorusu ve gelen cevabı dikkate alarak güzel açıklayıcı formatta dost canlısı cevap veren bir asistansın.Cümlelerin sonuna emoji koymayı unutma
 
@@ -206,7 +208,7 @@ def process_file_and_query(file, user_query):
         
     Description:This function is used to combine all func into one function
 
-    Return:
+    Returns:
         Final_answer(str):Response
         Pandas_code(str):If user ask unrelated question LLM returns warning message
             
@@ -216,7 +218,7 @@ def process_file_and_query(file, user_query):
     if df is None:
         return message, None
     elif user_query=="":
-        return "You didn't ask anything",None
+        return "Bari bir şey sorsaydında basıverseydin",None
     else:
         state,pandas_code = convert_to_pandas(user_query=user_query, df=df)
         
@@ -226,7 +228,7 @@ def process_file_and_query(file, user_query):
             final_answer = readable_answer_agent(output, user_query)
             return final_answer
         else:               #if  convert_to_pandas function  returned False 
-            return pandas_code
+            return pandas_code #LLM warning response which is assigned in prompt
 
 
 def exec_visual_code(query, file):
@@ -235,7 +237,7 @@ def exec_visual_code(query, file):
         query(str):User query
         file(file):Dataset file
     description:Visualize the  user's question.
-    returns
+    returns:
         plt.gcf(Plot image):Plot image of executed visualization code
     """
     if query is None:
@@ -290,6 +292,8 @@ with gr.Blocks() as iface:
 
 # Launch the Gradio app
 iface.launch(share=False) 
+
+
 
 
 
