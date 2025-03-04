@@ -30,12 +30,12 @@ def find_file_type(df_path):
         return None, f"Hata: {str(e)}"
 
 
-def convert_to_pandas(user_query, df):# Text to pandas agent
+def convert_to_pandas(user_query, df):# Text2Pandas code agent
     """
     args:
     user_query(str):user query
     df:dataframe
-    description: This Function is used for converting user question to pandas code if user asks unrelated or dangerous question   
+    description: This Function is used for converting user question to pandas code
     Returns:True,pandas_query(str) or  False,pandas_query(warning message)
     """
     
@@ -94,7 +94,7 @@ def convert_to_visual_code(user_query, df):#  Text to Visualizaton agent
     """
     
     summary=pd.DataFrame({"Data types":df.dtypes,
-                      "Unique values":df.nunique()}) # combine 
+                      "Unique values":df.nunique()}) # Data column infos and unique value count 
     
     system_prompt = """
     * Sen Kullanıcının isteğini uygun görselleştirme koduna  dönüştüren yardımsever bir  görselleştirici asistansın.
